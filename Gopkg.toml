@@ -8,7 +8,11 @@
   go-tests = true
   unused-packages = true
 
-[[constraint]]
-  name = "github.com/rexray/gocsi"
-  revision = "47f4bd656ddea05ff2d9c85cc55c6b9eafcf960e"
+# To build for 0.3.0
+# [[constraint]]
+#   name = "github.com/rexray/gocsi"
+#   revision = "9407f5f4ed38592fe11b57c1c9d3621df05b753b"
 
+# [[constraint]]
+#   name = "github.com/thecodeteam/goscaleio"
+#   revision = "30be8284b32e1a53e2ac473e95275b24e6d583de"

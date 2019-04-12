@@ -2,30 +2,39 @@
 
 
 [[projects]]
+  digest = "1:720378f3704cb9869f9ea7875f4ecf1b90c2f743e70873af7971c054f65e4a5a"
   name = "github.com/akutz/gofsutil"
   packages = ["."]
+  pruneopts = "NUT"
   revision = "56ae374ef75adf5ca8ea6b4b79d97175cb86deb2"
   version = "v0.1.2"
 
 [[projects]]
+  digest = "1:bbcc40d2ac2f2080553526dc9d52fcdc843dbb18a25d3178b9db4c9d83391d6d"
   name = "github.com/akutz/gosync"
   packages = ["."]
+  pruneopts = "NUT"
   revision = "94b0033d0b5fc254594c3174329c19356c2c4f63"
   version = "v0.1.0"
 
 [[projects]]
+  digest = "1:0e6130bfa4527a26ef559c3c23126c09da9db38a308ac9a10d9f9f303eb43df7"
   name = "github.com/akutz/memconn"
   packages = ["."]
+  pruneopts = "NUT"
   revision = "51f5f0e8c29b11eaef960ca1b0df970006ccda2c"
   version = "v0.1.0"
 
 [[projects]]
+  digest = "1:7f21fa1f8ab9a529dba26a7e9cf20de217c307fa1d96cb599d3afd9e5c83e9d6"
   name = "github.com/container-storage-interface/spec"
-  packages = ["lib/go/csi/v0"]
-  revision = "2178fdeea87f1150a17a63252eee28d4d8141f72"
-  version = "v0.3.0"
+  packages = ["lib/go/csi"]
+  pruneopts = "NUT"
+  revision = "f750e6765f5f6b4ac0e13e95214d58901290fb4b"
+  version = "v1.1.0"
 
 [[projects]]
+  digest = "1:c9e28df25bdc37571d75c2ad88b516ef81c946661f38506f3899c6e51b02d6af"
   name = "github.com/coreos/etcd"
   packages = [
     "auth/authpb",
@@ -34,53 +43,67 @@
     "etcdserver/api/v3rpc/rpctypes",
     "etcdserver/etcdserverpb",
     "mvcc/mvccpb",
-    "pkg/types"
+    "pkg/types",
   ]
-  revision = "27fc7e2296f506182f58ce846e48f36b34fe6842"
-  version = "v3.3.10"
+  pruneopts = "NUT"
+  revision = "d57e8b8d97adfc4a6c224fe116714bf1a1f3beb9"
+  version = "v3.3.12"
 
 [[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
+  pruneopts = "NUT"
   revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:a3d6554400182effbda952d37d18a8212caccb51363612baee27d4f5a13139d6"
   name = "github.com/gogo/protobuf"
   packages = [
     "gogoproto",
     "proto",
-    "protoc-gen-gogo/descriptor"
+    "protoc-gen-gogo/descriptor",
   ]
-  revision = "636bf0302bc95575d69441b25a2603156ffdddf1"
-  version = "v1.1.1"
+  pruneopts = "NUT"
+  revision = "ba06b47c162d49f2af050fb4c75bcbc86a159d5c"
+  version = "v1.2.1"
 
 [[projects]]
+  digest = "1:15c3c59c0e964d39008948fdac5114327cabbf2475655ee55083410fe877e0a3"
   name = "github.com/golang/protobuf"
   packages = [
     "proto",
+    "protoc-gen-go/descriptor",
     "ptypes",
     "ptypes/any",
     "ptypes/duration",
     "ptypes/timestamp",
-    "ptypes/wrappers"
+    "ptypes/wrappers",
   ]
-  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
-  version = "v1.2.0"
+  pruneopts = "NUT"
+  revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
+  version = "v1.3.1"
 
 [[projects]]
+  digest = "1:58999a98719fddbac6303cb17e8d85b945f60b72f48e3a2df6b950b97fa926f1"
   name = "github.com/konsorten/go-windows-terminal-sequences"
   packages = ["."]
-  revision = "5c8c8bd35d3832f5d134ae1e1e375b69a4d25242"
-  version = "v1.0.1"
+  pruneopts = "NUT"
+  revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
+  version = "v1.0.2"
 
 [[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
+  pruneopts = "NUT"
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:ef89bd8708f19b2be8d3426d2da991001b2d004f6e414003aae3c2cc1716c723"
   name = "github.com/rexray/gocsi"
   packages = [
     ".",
@@ -91,39 +114,42 @@
     "middleware/serialvolume/etcd",
     "middleware/serialvolume/types",
     "middleware/specvalidator",
-    "utils"
+    "utils",
   ]
-  revision = "47f4bd656ddea05ff2d9c85cc55c6b9eafcf960e"
+  pruneopts = "NUT"
+  revision = "9407f5f4ed38592fe11b57c1c9d3621df05b753b"
 
 [[projects]]
   branch = "master"
+  digest = "1:7d9f313b73daf0ca4459ecd8c265b80ff2631cdd478ce8810d2644e80358476b"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
-  revision = "458213699411cdceb6fd839a3178be49c01fba54"
+  pruneopts = "NUT"
+  revision = "9b3cdde74fbe9443d704467498a7dcb61a79de9b"
 
 [[projects]]
+  digest = "1:42e8c2456d7ec0f31e182c20022e74324c4da2cb3bd9069ff9b131fe33466308"
   name = "github.com/stretchr/testify"
   packages = ["assert"]
-  revision = "f35b8ab0b5a2cef36673838d662e249dd9c94686"
-  version = "v1.2.2"
+  pruneopts = "NUT"
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:1112838a41a4752101d3f434ff075f256405b5221d162cf554e7be66f1d99a4d"
   name = "github.com/thecodeteam/goscaleio"
   packages = [
     ".",
-    "types/v1"
+    "api",
+    "types/v1",
   ]
-  revision = "19b7692523ba7a945b47672a2b976fd0f42449b3"
-  version = "v0.1.0"
+  pruneopts = "NUT"
+  revision = "30be8284b32e1a53e2ac473e95275b24e6d583de"
 
 [[projects]]
   branch = "master"
-  name = "golang.org/x/crypto"
-  packages = ["ssh/terminal"]
-  revision = "a92615f3c49003920a58dedcf32cf55022cefb8d"
-
-[[projects]]
-  branch = "master"
+  digest = "1:b749e029ef289fc2242b74ac82e8e7bcbd34109daf57b42d30c0804cd635bcc3"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -132,20 +158,21 @@
     "http2/hpack",
     "idna",
     "internal/timeseries",
-    "trace"
+    "trace",
   ]
-  revision = "49bb7cea24b1df9410e1712aa6433dae904ff66a"
+  pruneopts = "NUT"
+  revision = "eb5bcb51f2a31c7d5141d810b70815c05d9c9146"
 
 [[projects]]
   branch = "master"
+  digest = "1:6340f2bc34a845d3f5141cb87916197518eebc94490f46aefe430b666a322606"
   name = "golang.org/x/sys"
-  packages = [
-    "unix",
-    "windows"
-  ]
-  revision = "fa43e7bc11baaae89f3f902b2b4d832b68234844"
+  packages = ["unix"]
+  pruneopts = "NUT"
+  revision = "b44545bcd369ef9ff9bebcfebf5f3370ef9b1932"
 
 [[projects]]
+  digest = "1:e7071ed636b5422cc51c0e3a6cebc229d6c9fffc528814b519a980641422d619"
   name = "golang.org/x/text"
   packages = [
     "collate",
@@ -161,36 +188,46 @@
     "unicode/bidi",
     "unicode/cldr",
     "unicode/norm",
-    "unicode/rangetable"
+    "unicode/rangetable",
   ]
+  pruneopts = "NUT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:c3076e7defee87de1236f1814beb588f40a75544c60121e6eb38b3b3721783e2"
   name = "google.golang.org/genproto"
   packages = ["googleapis/rpc/status"]
-  revision = "af9cb2a35e7f169ec875002c1829c9b315cddc04"
+  pruneopts = "NUT"
+  revision = "64821d5d210748c883cd2b809589555ae4654203"
 
 [[projects]]
+  digest = "1:2c81be55b52bfd8479b143a947f919055da25c3460f3a2c17819834af238050f"
   name = "google.golang.org/grpc"
   packages = [
     ".",
     "balancer",
     "balancer/base",
     "balancer/roundrobin",
+    "binarylog/grpc_binarylog_v1",
     "codes",
     "connectivity",
     "credentials",
+    "credentials/internal",
     "encoding",
     "encoding/proto",
     "grpclog",
     "health/grpc_health_v1",
     "internal",
     "internal/backoff",
+    "internal/balancerload",
+    "internal/binarylog",
     "internal/channelz",
     "internal/envconfig",
     "internal/grpcrand",
+    "internal/grpcsync",
+    "internal/syscall",
     "internal/transport",
     "keepalive",
     "metadata",
@@ -201,14 +238,78 @@
     "resolver/passthrough",
     "stats",
     "status",
-    "tap"
+    "tap",
   ]
-  revision = "8dea3dc473e90c8179e519d91302d0597c0ca1d1"
-  version = "v1.15.0"
+  pruneopts = "NUT"
+  revision = "236199dd5f8031d698fb64091194aecd1c3895b2"
+  version = "v1.20.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "990b2767cf821ccb0eb93d95839860dfd5cf52ca9e4f65d6fd7d9347de2aa9a1"
+  input-imports = [
+    "github.com/akutz/gofsutil",
+    "github.com/akutz/memconn",
+    "github.com/container-storage-interface/spec/lib/go/csi",
+    "github.com/coreos/etcd/auth/authpb",
+    "github.com/coreos/etcd/clientv3",
+    "github.com/coreos/etcd/etcdserver/api/v3rpc/rpctypes",
+    "github.com/coreos/etcd/etcdserver/etcdserverpb",
+    "github.com/coreos/etcd/mvcc/mvccpb",
+    "github.com/coreos/etcd/pkg/types",
+    "github.com/davecgh/go-spew/spew",
+    "github.com/gogo/protobuf/gogoproto",
+    "github.com/gogo/protobuf/proto",
+    "github.com/gogo/protobuf/protoc-gen-gogo/descriptor",
+    "github.com/golang/protobuf/proto",
+    "github.com/golang/protobuf/ptypes",
+    "github.com/golang/protobuf/ptypes/any",
+    "github.com/golang/protobuf/ptypes/duration",
+    "github.com/golang/protobuf/ptypes/timestamp",
+    "github.com/konsorten/go-windows-terminal-sequences",
+    "github.com/pmezard/go-difflib/difflib",
+    "github.com/rexray/gocsi",
+    "github.com/rexray/gocsi/context",
+    "github.com/sirupsen/logrus",
+    "github.com/stretchr/testify/assert",
+    "github.com/thecodeteam/goscaleio",
+    "github.com/thecodeteam/goscaleio/api",
+    "github.com/thecodeteam/goscaleio/types/v1",
+    "golang.org/x/net/context",
+    "golang.org/x/net/http2",
+    "golang.org/x/net/http2/hpack",
+    "golang.org/x/net/idna",
+    "golang.org/x/sys/unix",
+    "golang.org/x/text/collate",
+    "golang.org/x/text/internal/gen",
+    "golang.org/x/text/internal/ucd",
+    "golang.org/x/text/language",
+    "golang.org/x/text/transform",
+    "golang.org/x/text/unicode/bidi",
+    "golang.org/x/text/unicode/rangetable",
+    "google.golang.org/genproto/googleapis/rpc/status",
+    "google.golang.org/grpc",
+    "google.golang.org/grpc/balancer",
+    "google.golang.org/grpc/balancer/base",
+    "google.golang.org/grpc/binarylog/grpc_binarylog_v1",
+    "google.golang.org/grpc/codes",
+    "google.golang.org/grpc/connectivity",
+    "google.golang.org/grpc/credentials",
+    "google.golang.org/grpc/encoding",
+    "google.golang.org/grpc/grpclog",
+    "google.golang.org/grpc/health/grpc_health_v1",
+    "google.golang.org/grpc/internal",
+    "google.golang.org/grpc/internal/backoff",
+    "google.golang.org/grpc/internal/channelz",
+    "google.golang.org/grpc/internal/grpcrand",
+    "google.golang.org/grpc/internal/syscall",
+    "google.golang.org/grpc/keepalive",
+    "google.golang.org/grpc/metadata",
+    "google.golang.org/grpc/peer",
+    "google.golang.org/grpc/resolver",
+    "google.golang.org/grpc/stats",
+    "google.golang.org/grpc/status",
+    "google.golang.org/grpc/tap",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

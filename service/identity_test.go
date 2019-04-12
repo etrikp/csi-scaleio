@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"github.com/container-storage-interface/spec/lib/go/csi"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/thecodeteam/csi-scaleio/core"

@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"github.com/container-storage-interface/spec/lib/go/csi"
 	log "github.com/sirupsen/logrus"
 	"github.com/thecodeteam/goscaleio"
 	"golang.org/x/net/context"
@@ -93,26 +93,6 @@ func getMappedVol(id string) (*goscaleio.SdcMappedVolume, error) {
 			"volume: %s not published to node", id)
 	}
 	return sdcMappedVol, nil
-}
-
-func (s *service) NodeGetId(
-	ctx context.Context,
-	req *csi.NodeGetIdRequest) (
-	*csi.NodeGetIdResponse, error) {
-
-	if s.opts.SdcGUID == "" {
-		if !s.opts.AutoProbe {
-			return nil, status.Error(codes.FailedPrecondition,
-				"Unable to get Node ID. Either it is not configured, "+
-					"or Node Service has not been probed")
-		}
-		if err := s.nodeProbe(ctx); err != nil {
-			return nil, err
-		}
-	}
-	return &csi.NodeGetIdResponse{
-		NodeId: s.opts.SdcGUID,
-	}, nil
 }
 
 func (s *service) nodeProbe(ctx context.Context) error {

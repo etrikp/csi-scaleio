@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"github.com/container-storage-interface/spec/lib/go/csi"
 	"github.com/rexray/gocsi"
 	csictx "github.com/rexray/gocsi/context"
 	log "github.com/sirupsen/logrus"
@@ -274,7 +274,7 @@ func (s *service) getStoragePoolID(name string) (string, error) {
 func getCSIVolume(vol *siotypes.Volume) *csi.Volume {
 
 	vi := &csi.Volume{
-		Id:            vol.ID,
+		VolumeId:            vol.ID,
 		CapacityBytes: int64(vol.SizeInKb * bytesInKiB),
 	}
 

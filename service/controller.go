@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"github.com/container-storage-interface/spec/lib/go/csi"
 	log "github.com/sirupsen/logrus"
 	"github.com/thecodeteam/goscaleio"
 	siotypes "github.com/thecodeteam/goscaleio/types/v1"
@@ -45,6 +45,11 @@ const (
 	errNoMultiMap             = "volume not enabled for mapping to multiple hosts"
 	errUnknownAccessMode      = "access mode cannot be UNKNOWN"
 	errNoMultiNodeWriter      = "multi-node with writer(s) only supported for block access type"
+	volumeCapabilityMessageMultinodeVolume    = "Volume is a multinode volume"
+	volumeCapabilityMessageNotMultinodeVolume = "Volume is not a multinode volume"
+	volumeCapabilityMessageReadOnlyVolume     = "Volume is read only"
+	volumeCapabilityMessageNotReadOnlyVolume  = "Volume is not read only"
+	defaultCSIVolumeSize                      = uint64(1024 * 1024 * 1024)
 )
 
 func (s *service) CreateVolume(
@@ -456,17 +461,62 @@ func (s *service) ValidateVolumeCapabilities(
 			err.Error())
 	}
 
-	vcs := req.GetVolumeCapabilities()
-	supported, reason := valVolumeCaps(vcs, vol)
-
-	resp := &csi.ValidateVolumeCapabilitiesResponse{
-		Supported: supported,
+	// Setup uninitialized response object
+	result := &csi.ValidateVolumeCapabilitiesResponse{
+		Confirmed: &csi.ValidateVolumeCapabilitiesResponse_Confirmed{
+			VolumeContext:      req.GetVolumeContext(),
+			VolumeCapabilities: req.GetVolumeCapabilities(),
+			Parameters:         req.GetParameters(),
+		},
 	}
-	if !supported {
-		resp.Message = reason
-	}
 
-	return resp, nil
+	for _, capability := range req.GetVolumeCapabilities() {
+		// Currently the CSI spec defines all storage as "file systems."
+		// So we do not need to check this with the volume. All we will check
+		// here is the validity of the capability access type.
+		if capability.GetMount() == nil && capability.GetBlock() == nil {
+			return nil, status.Error(
+				codes.InvalidArgument,
+				"Cannot have both mount and block be undefined")
+		}
+
+		// Check access mode is setup correctly
+		mode := capability.GetAccessMode()
+		switch {
+		case mode.Mode == csi.VolumeCapability_AccessMode_SINGLE_NODE_WRITER:
+			fallthrough
+		case mode.Mode == csi.VolumeCapability_AccessMode_SINGLE_NODE_READER_ONLY:
+			break
+		case mode.Mode == csi.VolumeCapability_AccessMode_MULTI_NODE_READER_ONLY:
+			if !vol.MappingToAllSdcsEnabled {
+				result.Confirmed = nil
+				result.Message = errNoMultiMap
+				break
+			}
+		case mode.Mode == csi.VolumeCapability_AccessMode_MULTI_NODE_SINGLE_WRITER ||
+			mode.Mode == csi.VolumeCapability_AccessMode_MULTI_NODE_MULTI_WRITER:
+			if !vol.MappingToAllSdcsEnabled {
+				result.Confirmed = nil
+				result.Message = errNoMultiMap
+				break
+			}
+			if at := capability.GetBlock(); at == nil {
+				result.Confirmed = nil
+				result.Message = errNoMultiNodeWriter
+				break
+			}
+		default:
+			return nil, status.Errorf(
+				codes.InvalidArgument,
+				"AccessMode %s is not allowed",
+				mode.Mode.String())
+		}
+
+		if result.Confirmed == nil {
+			return result, nil
+		}
+	}
+	return result, nil
 }
 
 func accTypeIsBlock(vcs []*csi.VolumeCapability) bool {
@@ -476,51 +526,6 @@ func accTypeIsBlock(vcs []*csi.VolumeCapability) bool {
 		}
 	}
 	return false
-}
-
-func valVolumeCaps(
-	vcs []*csi.VolumeCapability,
-	vol *siotypes.Volume) (bool, string) {
-
-	var (
-		supported = true
-		isBlock   = accTypeIsBlock(vcs)
-		reason    string
-	)
-
-	for _, vc := range vcs {
-		am := vc.GetAccessMode()
-		if am == nil {
-			continue
-		}
-		switch am.Mode {
-		case csi.VolumeCapability_AccessMode_UNKNOWN:
-			supported = false
-			reason = errUnknownAccessMode
-		case csi.VolumeCapability_AccessMode_SINGLE_NODE_WRITER:
-			fallthrough
-		case csi.VolumeCapability_AccessMode_SINGLE_NODE_READER_ONLY:
-			break
-		case csi.VolumeCapability_AccessMode_MULTI_NODE_READER_ONLY:
-			if !vol.MappingToAllSdcsEnabled {
-				supported = false
-				reason = errNoMultiMap
-			}
-		case csi.VolumeCapability_AccessMode_MULTI_NODE_SINGLE_WRITER:
-			fallthrough
-		case csi.VolumeCapability_AccessMode_MULTI_NODE_MULTI_WRITER:
-			if !vol.MappingToAllSdcsEnabled {
-				supported = false
-				reason = errNoMultiMap
-			}
-			if !isBlock {
-				supported = false
-				reason = errNoMultiNodeWriter
-			}
-		}
-	}
-
-	return supported, reason
 }
 
 func (s *service) ListVolumes(
@@ -755,7 +760,7 @@ func (s *service) controllerProbe(ctx context.Context) error {
 		s.adminClient = c
 	}
 
-	if s.adminClient.Token == "" {
+	if s.adminClient.GetToken() == "" {
 		_, err := s.adminClient.Authenticate(&goscaleio.ConfigConnect{
 			Endpoint: s.opts.Endpoint,
 			Username: s.opts.User,
@@ -817,6 +822,30 @@ func (s *service) ListSnapshots(
 	ctx context.Context,
 	req *csi.ListSnapshotsRequest) (
 	*csi.ListSnapshotsResponse, error) {
+
+	return nil, status.Error(codes.Unimplemented, "")
+}
+
+func (s *service) ControllerExpandVolume(
+	ctx context.Context,
+	req *csi.ControllerExpandVolumeRequest) (
+	*csi.ControllerExpandVolumeResponse, error){
+
+	return nil, status.Error(codes.Unimplemented, "")
+}
+
+func (s *service) NodeExpandVolume(
+	ctx context.Context,
+	req *csi.NodeExpandVolumeRequest) (
+	*csi.NodeExpandVolumeResponse, error){
+
+	return nil, status.Error(codes.Unimplemented, "")
+}
+
+func (s *service) NodeGetVolumeStats(
+	ctx context.Context,
+	req *csi.NodeGetVolumeStatsRequest) (
+	*csi.NodeGetVolumeStatsResponse, error){
 
 	return nil, status.Error(codes.Unimplemented, "")
 }
