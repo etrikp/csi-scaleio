@@ -2,7 +2,9 @@ FROM golang:1.10 AS builder
 
 COPY . /go/src/github.com/thecodeteam/csi-scaleio
 WORKDIR /go/src/github.com/thecodeteam/csi-scaleio
+RUN X_CSI_SCALEIO_NO_PROBE_ON_START=true go test github.com/thecodeteam/csi-scaleio/service -test.v
 RUN go build
+
 
 FROM centos:7
 
